@@ -15,7 +15,7 @@ Hey {} How are you buddy
 async def start_message(Nihaal,message):
     await message.reply_photo(
         photo="https://telegra.ph/file/3f5c3a461d41522a3b7d2.jpg",
-        caption=START_MESSAGE.fromat(message.from_user.mention),
+        caption=START_MESSAGE.format(message.from_user.mention),
         reply_markup=InlineKeyboardMarkup( [[
             InlineKeyboardButton("ᴏᴡɴᴇʀ", url="https://t.me/NL_MP4"),
             InlineKeyboardButton("ɢʀᴏᴜᴘ", url="https://t.me/movie_lookam")
