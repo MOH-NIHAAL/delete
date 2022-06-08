@@ -1,7 +1,7 @@
 from pyrogram import client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-Nihaal=client(
+Nihaal=Client(
     "Pyrogram Bot",
     bot_token="5541342240:AAFvlATqafF1FB7TtMAMNVqdOv04c1a7nuY",
     api_id="18850696",
