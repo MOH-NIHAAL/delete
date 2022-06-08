@@ -1,5 +1,5 @@
 from pyrogram import client, filters
-from pyrogram.type import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 nihaal=client(
     "Pyrogram Bot",
