@@ -12,13 +12,13 @@ Nihaal=Client(
 async def start_message(Nihaal,message):
     await message.reply_photo(
         photo="https://telegra.ph/file/3f5c3a461d41522a3b7d2.jpg",
-        caption="hello iam just a test bot ",
+        caption="➪ ʜᴇʏ ʙᴜᴅᴅʏ ɪᴀᴍ sɪᴍᴘʟᴇ ᴀᴜᴛᴏ ғɪʟᴛᴇʀ ʙᴏᴛ ✌︎",
         reply_markup=InlineKeyboardMarkup( [[
-            InlineKeyboardButton("owner", url="https://t.me/NL_MP4"),
-            InlineKeyboardButton("group", url="https://t.me/movie_lookam")
+            InlineKeyboardButton("ᴏᴡɴᴇʀ", url="https://t.me/NL_MP4"),
+            InlineKeyboardButton("ɢʀᴏᴜᴘ", url="https://t.me/movie_lookam")
             ],[
-            InlineKeyboardButton("help", callback_data="help"),
-            InlineKeyboardButton("about", callback_data="about")
+            InlineKeyboardButton("ʜᴇʟᴘ", callback_data="help"),
+            InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="about")
             ]]
          )
     )
