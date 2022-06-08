@@ -7,7 +7,9 @@ Nihaal=Client(
     api_id="18850696",
     api_hash="e3f5a7b4ea28b5c7ce9fc65e48274ae6"
 )
-START_MESSAGE="""Hey {} How are you buddy"""
+START_MESSAGE= """
+Hey {} How are you buddy
+"""
 
 @Nihaal.on_message(filters.command("start"))
 async def start_message(Nihaal,message):
