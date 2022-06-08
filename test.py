@@ -26,4 +26,4 @@ async def start_message(Nihaal,message):
             
     
     
-nihaal.run()
+Nihaal.run()
