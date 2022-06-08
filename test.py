@@ -1,4 +1,4 @@
-from pyrogram import client, filters
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 Nihaal=Client(
