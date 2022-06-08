@@ -25,6 +25,13 @@ async def start_message(Nihaal,message):
             ]]
          )
     )
+    
+@Nihaal.on_message(filters.command("info"))
+async def info(bot, msg):
+    text=f"""
+𝙵𝙸𝚁𝚂𝚃 𝙽𝙰𝙼𝙴 = {msg.from_user.first_name}
+   
+    await msg.reply_text(text=text)
         
             
     
