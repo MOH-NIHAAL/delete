@@ -6,8 +6,8 @@ START_MESSAGE= """
 Hey {} How are you buddy
 """
 
-@Nihaal.on_message(filters.command("start"))
-async def start_message(Nihaal,message):
+@Client.on_message(filters.command("start"))
+async def start_message(Client,message):
     await message.reply_photo(
         photo="https://telegra.ph/file/3f5c3a461d41522a3b7d2.jpg",
         caption=START_MESSAGE.format(message.from_user.mention),
@@ -21,7 +21,7 @@ async def start_message(Nihaal,message):
          )
     )
     
-@Nihaal.on_message(filters.command("info"))
+@Client.on_message(filters.command("info"))
 async def info(bot, msg):
     text = f"""
 𝙵𝙸𝚁𝚂𝚃 𝙽𝙰𝙼𝙴 = {msg.from_user.first_name}
@@ -31,8 +31,4 @@ async def info(bot, msg):
 𝙻𝙸𝙽𝙺 = {msg.from_user.mention}
 """
     await msg.reply_text(text=text)
-        
-            
-    
-    
-Nihaal.run()
+       
