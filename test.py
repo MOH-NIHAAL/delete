@@ -33,6 +33,7 @@ async def info(bot, msg):
 𝙻𝙰𝚂𝚃 𝙽𝙰𝙼𝙴 = {msg.from_user.last_name}
 𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴 = @{msg.from_user.username}
 𝙸𝙳 = {msg.from_user.id}
+𝙻𝙸𝙽𝙺 = {msg.from_user.mention}
 """
     await msg.reply_text(text=text)
         
