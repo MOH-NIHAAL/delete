@@ -31,4 +31,11 @@ async def info(bot, msg):
 𝙻𝙸𝙽𝙺 = {msg.from_user.mention}
 """
     await msg.reply_text(text=text)
+
+@Client.on_message(filters.command("id"))
+async def id(bot, message):
+    text = f"""
+✯ ᴄʜᴀᴛ ɪᴅ = {message.from_chat.id}
+"""
+    await message.reply_text(text=text)
        
