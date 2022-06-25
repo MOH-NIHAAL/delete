@@ -21,21 +21,47 @@ START_MESSAGE= """
 Hey {} How are you buddy
 """
 
-@Client.on_message(filters.command("start"))
-async def start_message(Client,message):
-     await message.reply_photo(
-        photo=random.choice(PICS),
-        caption=START_MESSAGE.format(message.from_user.mention),
-        reply_markup=InlineKeyboardMarkup( [[
-            InlineKeyboardButton("ᴏᴡɴᴇʀ", url="https://t.me/NL_MP4"),
-            InlineKeyboardButton("ɢʀᴏᴜᴘ", url="https://t.me/movie_lookam")
+@Client.on_message(filters.command("start") & filters.incoming & ~filters.edited)
+async def start(client, message):
+    if message.chat.type in ['group', 'supergroup']:
+        buttons = [
+            [
+                InlineKeyboardButton('Updates', url='https://t.me/TeamEvamaria')
+            ],
+            [
+                InlineKeyboardButton('Command', url=f"https://t.me/{temp.U_NAME}?start=help"),
+            ]
+            ]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply(script.START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup)
+        await asyncio.sleep(2) # 😢 https://github.com/EvamariaTG/EvaMaria/blob/master/plugins/p_ttishow.py#L17 😬 wait a bit, before checking.
+        if not await db.get_chat(message.chat.id):
+            total=await client.get_chat_members_count(message.chat.id)
+            await client.send_message(LOG_CHANNEL, script.LOG_TEXT_G.format(message.chat.title, message.chat.id, total, "Unknown"))       
+            await db.add_chat(message.chat.id, message.chat.title)
+        return 
+    if not await db.is_user_exist(message.from_user.id):
+        await db.add_user(message.from_user.id, message.from_user.first_name)
+        await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
+    if len(message.command) != 2:
+        buttons = [[
+            InlineKeyboardButton('Add me to your group', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
             ],[
-            InlineKeyboardButton("ʜᴇʟᴘ", callback_data="help"),
-            InlineKeyboardButton("ᴀʙᴏᴜᴛ", callback_data="about")
-            ]]
-         )
-    )
-       return
+            InlineKeyboardButton('Updates', url='https://t.me/CL_UPDATE'),
+            InlineKeyboardButton('Support', url='https://t.me/NL_BOTZxCHAT')
+            ],[
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('About', callback_data='about')
+            ],[
+            InlineKeyboardButton('Close', callback_data='close'),
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_text(
+            text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+        return
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
             invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
