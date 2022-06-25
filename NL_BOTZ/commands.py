@@ -2,6 +2,7 @@ import os
 import logging
 import random
 import asyncio
+from Script import script
 from pyrogram import Client
 from pyrogram import filters
 from pyrogram.errors import ChatAdminRequired, FloodWait
