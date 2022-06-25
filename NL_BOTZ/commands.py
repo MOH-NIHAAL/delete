@@ -23,8 +23,7 @@ Hey {} How are you buddy
 
 @Client.on_message(filters.command("start"))
 async def start_message(Client,message):
-    if message.chat.type in ['supergroup,' 'group']:
-    await message.reply_photo(
+     await message.reply_photo(
         photo=random.choice(PICS),
         caption=START_MESSAGE.format(message.from_user.mention),
         reply_markup=InlineKeyboardMarkup( [[
