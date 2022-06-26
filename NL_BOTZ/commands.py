@@ -46,19 +46,12 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
         buttons = [[
-            InlineKeyboardButton('Add me to your group', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
-            InlineKeyboardButton('Updates', url='https://t.me/CL_UPDATE'),
-            InlineKeyboardButton('Support', url='https://t.me/NL_BOTZxCHAT')
-            ],[
-            InlineKeyboardButton('Help', callback_data='help'),
-            InlineKeyboardButton('About', callback_data='about')
-            ],[
-            InlineKeyboardButton('Close', callback_data='close'),
+            InlineKeyboardButton('✨ ᴄʟɪᴄᴋ ʜᴇʀᴇ ғᴏʀ ᴍᴏʀᴇ ʙᴜᴛᴛᴏɴs ✨', callback_data='start')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply_text(
-            text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+        await message.reply_video(
+            video=random.choice(PICS),
+            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode='html'
         )
@@ -91,24 +84,18 @@ async def start(client, message):
             parse_mode="markdown"
             )
         return
-@Client.on_message(filters.command("info"))
-async def info(bot, msg):
-    text = f"""
-𝙵𝙸𝚁𝚂𝚃 𝙽𝙰𝙼𝙴 = {msg.from_user.first_name}
-𝙻𝙰𝚂𝚃 𝙽𝙰𝙼𝙴 = {msg.from_user.last_name}
-𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴 = @{msg.from_user.username}
-𝚄𝚂𝙴𝚁 𝙸𝙳 = {msg.from_user.id}
-𝙻𝙸𝙽𝙺 = {msg.from_user.mention}
-"""
-    await msg.reply_text(text=text)
-
-@Client.on_message(filters.command("id"))
-async def id(bot, message):
-    text = f"""
-✯ ᴄʜᴀᴛ ɪᴅ = {message.from_chat.id}
-"""
-    await message.reply_text(text=text)
-    return
+    if len(message.command) ==2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
+        buttons = [[
+            InlineKeyboardButton('✨ ᴄʟɪᴄᴋ ʜᴇʀᴇ ғᴏʀ ᴍᴏʀᴇ ʙᴜᴛᴛᴏɴs ✨', callback_data='start')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_video(
+            video=random.choice(PICS),
+            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+        return
     data = message.command[1]
     try:
         pre, file_id = data.split('_', 1)
@@ -365,7 +352,7 @@ async def delete_all_index(bot, message):
 @Client.on_callback_query(filters.regex(r'^autofilter_delete'))
 async def delete_all_index_confirm(bot, message):
     await Media.collection.drop()
-    await message.answer('Deleting...')
+    await message.answer('Piracy Is Crime')
     await message.message.edit('Succesfully Deleted All The Indexed Files.')
 
 
@@ -481,6 +468,8 @@ async def settings(client, message):
             reply_to_message_id=message.message_id
         )
 
+
+
 @Client.on_message(filters.command('set_template'))
 async def save_template(client, message):
     sts = await message.reply("Checking template")
@@ -523,5 +512,3 @@ async def save_template(client, message):
     template = message.text.split(" ", 1)[1]
     await save_group_settings(grp_id, 'template', template)
     await sts.edit(f"Successfully changed template for {title} to\n\n{template}")
-
-       
