@@ -623,7 +623,7 @@ async def auto_filter(client, message):
                 file_id = file.file_id
                 file_name = file.file_name
                 file_size = get_size(file.file_size)
-                btn.append([text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}')]
+                btn.append(text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}')
                 )
         else:
             if SPELL_CHECK_REPLY:  
