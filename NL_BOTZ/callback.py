@@ -620,10 +620,10 @@ async def auto_filter(client, message):
         search = message.text
         files = await get_filter_results(query=search)
         if files:
-            buttons.append(0, 
+            btn.append(0, 
                 [InlineKeyboardButton(f'📁 {search} 📁', 'reqst1')]
             )
-            buttons.append(1, 
+            btn.append(1, 
                 [InlineKeyboardButton(f'ғɪʟᴇs: {len(files)}', 'reqst1'),
                  InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'movss'),
                  InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'moviis')]
