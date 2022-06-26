@@ -58,7 +58,8 @@ async def cb_handler(client: Client, query):
             if int(index) == int(data["total"]) - 2:
                 buttons = data['buttons'][int(index)+1].copy()
                 buttons.append(
-                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
+                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), 
+                     InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
                 )
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
@@ -89,7 +90,8 @@ async def cb_handler(client: Client, query):
             if int(index) == 1:
                 buttons = data['buttons'][int(index)-1].copy()
                 buttons.append(
-                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
+                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), 
+                     InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
                 )
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
@@ -109,9 +111,7 @@ async def cb_handler(client: Client, query):
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
-        
-            
-        elif chat.type in ["group", "supergroup"]:
+      
             grp_id = query.message.chat.id
             title = query.message.chat.title
 
@@ -651,7 +651,8 @@ async def auto_filter(client, message):
         else:
             buttons = btn
             buttons.append(
-                [InlineKeyboardButton(text=f"🗓 1/{round(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="NEXT ⏩",callback_data=f"next_{req}_{key}_{offset}")]
+                [InlineKeyboardButton(text=f"🗓 1/{round(int(total_results)/10)}",callback_data="pages"), 
+                 InlineKeyboardButton(text="NEXT ⏩",callback_data=f"next_{req}_{key}_{offset}")]
             )
 
             imdb=await get_poster(search)
