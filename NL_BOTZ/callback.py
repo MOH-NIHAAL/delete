@@ -46,7 +46,6 @@ async def cb_handler(client: Client, query):
     if (clicked == typed):
 
 # # ---------- 🔘 [ | 𝗚𝗥𝗢𝗨𝗣 𝗙𝗜𝗟𝗧𝗘𝗥𝗦 | ] 🔘 ---------- # #
-
         if query.data.startswith("nextgroup"):
             ident, index, keyword = query.data.split("_")
             try:
@@ -57,23 +56,21 @@ async def cb_handler(client: Client, query):
 
             if int(index) == int(data["total"]) - 2:
                 buttons = data['buttons'][int(index)+1].copy()
+
                 buttons.append(
-                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), 
-                     InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
-                )
+                     [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}"),
+                      InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
+                )            
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
             else:
                 buttons = data['buttons'][int(index)+1].copy()
+
                 buttons.append(
-                    [
-                        InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-                        InlineKeyboardButton(f"🗓 {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages"),
-                        InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")
-                    ],
-                )
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)+1}_{keyword}")]
+                )        
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
@@ -89,9 +86,13 @@ async def cb_handler(client: Client, query):
 
             if int(index) == 1:
                 buttons = data['buttons'][int(index)-1].copy()
+
                 buttons.append(
-                    [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"), 
-                     InlineKeyboardButton(f"📃 Pages {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
+                    [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
                 )
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
@@ -99,19 +100,21 @@ async def cb_handler(client: Client, query):
                 return   
             else:
                 buttons = data['buttons'][int(index)-1].copy()
+
                 buttons.append(
-                    [
-                        InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-                        InlineKeyboardButton(f"🗓 {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages"),
-                        InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")
-                    ],
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)-1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
                 )
 
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
-      
+        
+            
+        elif chat_type in ["group", "supergroup"]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
 
@@ -617,14 +620,17 @@ async def auto_filter(client, message):
         search = message.text
         files = await get_filter_results(query=search)
         if files:
-            btn.append([InlineKeyboardButton(text=f"🔮 {search}", callback_data=f"{search}")]
+            buttons.append(0, 
+                [InlineKeyboardButton(f'📁 {search} 📁', 'reqst1')]
+            )
+            buttons.append(1, 
+                [InlineKeyboardButton(f'ғɪʟᴇs: {len(files)}', 'reqst1'),
+                 InlineKeyboardButton(f'ᴍᴏᴠɪᴇ', 'movss'),
+                 InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'moviis')]
             )
             for file in files:
-                file_id = file.file_id
-                file_name = file.file_name
-                file_size = get_size(file.file_size)
-                btn.append([InlineKeyboardButton(text=f'🍭 {file_name}', callback_data=f"files#{file_id}"),
-                            InlineKeyboardButton(text=f'🍬 {file_size}', callback_data=f"files#{file_id}")]
+                btn.append([InlineKeyboardButton(text=f'🍭 {file.file_name}', callback_data=f'files#{file.file_id}',
+                            InlineKeyboardButton(text=f'🍬 {get_size(file.file_size)}', callback_data=f'files#{file.file_id}'
                 )
         else:
             if SPELL_CHECK_REPLY:  
@@ -651,8 +657,9 @@ async def auto_filter(client, message):
         else:
             buttons = btn
             buttons.append(
-                [InlineKeyboardButton(text=f"🗓 1/{round(int(total_results)/10)}",callback_data="pages"), 
-                 InlineKeyboardButton(text="NEXT ⏩",callback_data=f"next_{req}_{key}_{offset}")]
+                [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]buttons.append(
+            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
+        )    
             )
 
             imdb=await get_poster(search)
@@ -667,8 +674,10 @@ async def auto_filter(client, message):
         data = BUTTONS[keyword]
         buttons = data['buttons'][0].copy()
         buttons.append(
-                [InlineKeyboardButton(text="🗓 1/1",callback_data="pages")]
-            )
+            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}"),
+             InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages")]
+        )
+        
         imdb=await get_poster(search)
         if imdb and imdb.get('poster'):
             await message.reply_photo(photo=imdb.get('poster'), caption=script.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url'], short=imdb['short_info']), reply_markup=InlineKeyboardMarkup(buttons))
