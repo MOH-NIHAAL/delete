@@ -111,7 +111,7 @@ async def cb_handler(client: Client, query):
                 return
         
             
-        elif chat_type in ["group", "supergroup"]:
+        elif.chat.type in ["group", "supergroup"]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
 
@@ -623,8 +623,9 @@ async def auto_filter(client, message):
                 file_id = file.file_id
                 file_name = file.file_name
                 file_size = get_size(file.file_size)
-                btn.append(text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}')
-                
+                btn.append([InlineKeyboardButton(text=f'🍭 {file_name}', callback_data=f"files#{file_id}"),
+                            InlineKeyboardButton(text=f'🍬 {file_size}', callback_data=f"files#{file_id}")]
+                )
         else:
             if SPELL_CHECK_REPLY:  
                 reply = search.replace(" ", "+")
