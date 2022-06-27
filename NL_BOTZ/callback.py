@@ -33,6 +33,30 @@ async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
+ 
+@Client.on_callback_query()
+async def cb_handler(client: Client, query: CallbackQuery):
+    if query.data == "close_data":
+        await query.message.delete()
+    elif query.data == "delallconfirm":
+        userid = query.from_user.id
+        chat_type = query.message.chat.type
+
+        if chat_type == "private":
+            grpid = await active_connection(str(userid))
+            if grpid is not None:
+                grp_id = grpid
+                try:
+                    chat = await client.get_chat(grpid)
+                    title = chat.title
+                except:
+                    await query.message.edit_text("Make sure I'm present in your group!!", quote=True)
+                    return await query.answer('𝙿𝙻𝙴𝙰𝚂𝙴 𝚂𝙷𝙰𝚁𝙴 𝙰𝙽𝙳 𝚂𝚄𝙿𝙿𝙾𝚁𝚃')
+            else:
+                await query.message.edit_text(
+                    "I'm not connected to any groups!\nCheck /connections or connect to any groups",
+                    quote=True
+                )
 
 @Client.on_callback_query()
 async def cb_handler(client: Client, query):
@@ -126,34 +150,10 @@ async def cb_handler(client: Client, query):
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
-            
-@Client.on_callback_query()
-async def cb_handler(client: Client, query: CallbackQuery):
-    if query.data == "close_data":
-        await query.message.delete()
-    elif query.data == "delallconfirm":
-        userid = query.from_user.id
-        chat_type = query.message.chat.type
-
-        if chat_type == "private":
-            grpid = await active_connection(str(userid))
-            if grpid is not None:
-                grp_id = grpid
-                try:
-                    chat = await client.get_chat(grpid)
-                    title = chat.title
-                except:
-                    await query.message.edit_text("Make sure I'm present in your group!!", quote=True)
-                    return await query.answer('𝙿𝙻𝙴𝙰𝚂𝙴 𝚂𝙷𝙰𝚁𝙴 𝙰𝙽𝙳 𝚂𝚄𝙿𝙿𝙾𝚁𝚃')
-            else:
-                await query.message.edit_text(
-                    "I'm not connected to any groups!\nCheck /connections or connect to any groups",
-                    quote=True
-                )
-                return
         elif chat_type in ["group", "supergroup"]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
+            
 
         else:
             return
