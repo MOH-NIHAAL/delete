@@ -691,7 +691,7 @@ async def auto_filter(client, message):
             if SPELL_CHECK_REPLY:  
                 reply = search.replace(" ", "+")
                 reply_markup = InlineKeyboardMarkup([[
-                 InlineKeyboardButton("🔁 𝐓𝐫𝐲 𝐀𝐠𝐚𝐢𝐧 🔁", callback_data=f"checksub#{message.command[1]}")
+                 InlineKeyboardButton("🔁 𝐓𝐫𝐲 𝐀𝐠𝐚𝐢𝐧 🔁", callback_data=f"{message.command[1]}")
                  ],[
                  InlineKeyboardButton("🔮IMDB🔮", url=f"https://imdb.com/find?q={reply}"),
                  InlineKeyboardButton("🪐 Reason", callback_data="reason")
