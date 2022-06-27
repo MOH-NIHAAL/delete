@@ -655,9 +655,8 @@ async def auto_filter(client, message):
         else:
             buttons = btn
             buttons.append(
-                [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]buttons.append(
-            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
-        )    
+                [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages"),
+                 InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
             )
 
             imdb=await get_poster(search)
