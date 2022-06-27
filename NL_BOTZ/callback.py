@@ -705,7 +705,7 @@ async def auto_filter(client, message):
             buttons = btn
             buttons.append(
                 [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages"),
-                 InlineKeyboardButton("ɴᴇxᴛ", callback_data=f"next_{req}_{key}_{n_offset}")]
+                 InlineKeyboardButton("Close 🗑️", callback_data="close")]
             )
 
             imdb=await get_poster(search)
@@ -719,9 +719,13 @@ async def auto_filter(client, message):
 
         data = BUTTONS[keyword]
         buttons = data['buttons'][0].copy()
+
         buttons.append(
-            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}"),
-             InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages")]
+            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
+        )    
+        buttons.append(
+            [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages"),
+             InlineKeyboardButton("Close 🗑️", callback_data="close")]
         )
         
         imdb=await get_poster(search)
@@ -732,10 +736,7 @@ async def auto_filter(client, message):
         else:
             await message.reply_sticker("CAACAgUAAxkBAAIBPWJukSYrqGzTevtJeiXt0VurpiW0AALjBQACpKMQVP3FLTCQDGE0JAQ", reply_markup=InlineKeyboardMarkup(buttons))
 
-
-
-
-
+            
 async def manual_filters(client, message, text=False):
     group_id = message.chat.id
     name = text or message.text
