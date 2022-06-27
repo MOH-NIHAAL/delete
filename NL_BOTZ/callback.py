@@ -685,11 +685,7 @@ async def auto_filter(client, message):
                        InlineKeyboardButton(f'ꜱᴇʀɪᴇꜱ', 'moviis')]
             )
             for file in files:
-                file_id = file.file_id
-                file_name = file.file_name
-                file_size = get_size(file.file_size)
-                btn.append([InlineKeyboardButton(text=f'🍭 {file_name}', callback_data=f"files#{file_id}"),
-                            InlineKeyboardButton(text=f'🍬 {file_size}', callback_data=f"files#{file_id}")]
+                btn.append([InlineKeyboardButton(text=f"▫ {get_size(file.file_size)}  ‣  {file.file_name}", callback_data=f'files#{file.file_id}')]
                 )
         else:
             if SPELL_CHECK_REPLY:  
@@ -716,8 +712,7 @@ async def auto_filter(client, message):
         else:
             buttons = btn
             buttons.append(
-                [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages"),
-                 InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]
             )
 
             imdb=await get_poster(search)
@@ -733,13 +728,9 @@ async def auto_filter(client, message):
         buttons = data['buttons'][0].copy()
 
         buttons.append(
-            [InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
-        )    
-        buttons.append(
             [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages"),
-             InlineKeyboardButton("Close 🗑️", callback_data="close")]
-        )
-        
+             InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
+        )    
         imdb=await get_poster(search)
         if imdb and imdb.get('poster'):
             await message.reply_photo(photo=imdb.get('poster'), caption=script.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url'], short=imdb['short_info']), reply_markup=InlineKeyboardMarkup(buttons))
