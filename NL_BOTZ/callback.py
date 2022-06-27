@@ -111,9 +111,9 @@ async def cb_handler(client: Client, query):
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
-            except MessageNotModified:
-                pass
-            await query.answer()
+    except MessageNotModified:
+        pass
+    await query.answer()
     
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
