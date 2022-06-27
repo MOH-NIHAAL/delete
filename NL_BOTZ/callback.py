@@ -111,10 +111,6 @@ async def cb_handler(client: Client, query):
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
-             try:
-                await query.edit_message_reply_markup(
-                    reply_markup=InlineKeyboardMarkup(btn)
-                )
                 return
 
         else:
