@@ -656,19 +656,12 @@ async def auto_filter(client, message):
                 btn.append([InlineKeyboardButton(text=f"▫ {get_size(file.file_size)}  ‣  {file.file_name}", callback_data=f'files#{file.file_id}')]
                 )
         else:
-            if SPELL_CHECK_REPLY:  
-                reply = search.replace(" ", "+")
-                reply_markup = InlineKeyboardMarkup([[
-                 InlineKeyboardButton("🔁 𝐓𝐫𝐲 𝐀𝐠𝐚𝐢𝐧 🔁", callback_data=f"{message.command[1]}")
-                 ],[
-                 InlineKeyboardButton("🔮IMDB🔮", url=f"https://imdb.com/find?q={reply}"),
-                 InlineKeyboardButton("🪐 Reason", callback_data="reason")
-                 ]]
-                )    
-                imdb=await get_poster(search)
-                if imdb and imdb.get('poster'):
-                    await message.reply_photo(photo=imdb.get('poster'), caption=script.IMDB_MOVIE_2.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url'], short=imdb['short_info']), reply_markup=reply_markup) 
-                    return
+            member = await client.get_chat_member(chat_id=message.chat.id, user_id=message.from_user.id)
+            if member.status in ('administrator','creator') : return
+            m = await message.reply_sticker(sticker='CAACAgUAAxkBAAJNQWF2NY71AAETl40zFYS6Je5bYkajbgAC0gMAAsBmsFe68ft4kcyTVR4E', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('🔍 𝖲𝖾𝖺𝗋𝖼𝗁 𝖮𝗇 𝖦𝗈𝗈𝗀𝗅𝖾.', url=f'https://google.com/search?q={search.replace(" ","+")}')]]))
+            await asyncio.sleep(7)
+            await m.delete()
+            return
         if not btn:
             return
 
