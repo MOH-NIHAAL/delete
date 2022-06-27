@@ -45,6 +45,7 @@ async def cb_handler(client: Client, query):
     if (clicked == typed):
 
 # # ---------- 🔘 [ | 𝗚𝗥𝗢𝗨𝗣 𝗙𝗜𝗟𝗧𝗘𝗥𝗦 | ] 🔘 ---------- # #
+        
         if query.data.startswith("nextgroup"):
             ident, index, keyword = query.data.split("_")
             try:
@@ -57,9 +58,12 @@ async def cb_handler(client: Client, query):
                 buttons = data['buttons'][int(index)+1].copy()
 
                 buttons.append(
-                     [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}"),
-                      InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
-                )            
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )                
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
@@ -69,7 +73,11 @@ async def cb_handler(client: Client, query):
 
                 buttons.append(
                     [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)+1}_{keyword}")]
-                )        
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )                
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
@@ -87,8 +95,11 @@ async def cb_handler(client: Client, query):
                 buttons = data['buttons'][int(index)-1].copy()
 
                 buttons.append(
+                    [InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
                     [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
-                     InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
                 )
                 buttons.append(
                     [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
@@ -102,6 +113,10 @@ async def cb_handler(client: Client, query):
 
                 buttons.append(
                     [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)-1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
                 )
                 buttons.append(
                     [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
