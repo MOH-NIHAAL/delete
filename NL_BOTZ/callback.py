@@ -1,4 +1,4 @@
-[InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")import asyncio
+import asyncio
 import re
 import ast
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
