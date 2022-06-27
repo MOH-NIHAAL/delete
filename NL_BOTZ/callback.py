@@ -1,4 +1,4 @@
-import asyncio
+InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")import asyncio
 import re
 import ast
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
@@ -705,7 +705,7 @@ async def auto_filter(client, message):
             buttons = btn
             buttons.append(
                 [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages"),
-                 InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")]
+                 InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
             )
 
             imdb=await get_poster(search)
