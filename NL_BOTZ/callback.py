@@ -359,38 +359,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
-                ms = await client.send_cached_media(
-                    chat_id=CH_FILTER,
+                await client.send_cached_media(
+                    chat_id=query.from_user.id,
                     file_id=file_id,
-                    caption=f'<b>ʜᴇʏ 👋 {query.from_user.mention} 😊</b>\n\n<b>🗂️ ɴᴀᴍᴇ : <a href=https://t.me/movie_lookam>{title}</a></b>\n\n<b>⚙️ sɪᴢᴇ : {size}</b>\n\n<i>⚠️ 𝐓𝐡𝐢𝐬 𝐌𝐞𝐬𝐬𝐚𝐠𝐞 𝐖𝐢𝐥𝐥 𝐁𝐞 𝐀𝐮𝐭𝐨-𝐃𝐞𝐥𝐞𝐭𝐞𝐝 𝐈𝐧 𝐍𝐞𝐱𝐭 𝟓 𝐌𝐢𝐧𝐮𝐭𝐞𝐬 𝐓𝐨 𝐀𝐯𝐨𝐢𝐝 𝐂𝐨𝐩𝐲𝐫𝐢𝐠𝐡𝐭 𝐈𝐬𝐬𝐮𝐞𝐬.𝐒𝐨 𝐅𝐨𝐫𝐰𝐚𝐫𝐝 𝐓𝐡𝐢𝐬 𝐅𝐢𝐥𝐞 𝐓𝐨 𝐀𝐧𝐲𝐰𝐡𝐞𝐫𝐞 𝐄𝐥𝐬𝐞 𝐁𝐞𝐟𝐨𝐫𝐞 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠.. ⚠️</i>\n\n<b>🧑🏻‍💻 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {query.from_user.mention}\n🚀 ɢʀᴏᴜᴘ : {query.message.chat.title}</b>',
-                    reply_markup = InlineKeyboardMarkup(buttons),
+                    caption=f_caption,
                     protect_content=True if ident == "filep" else False 
                 )
-                msg1 = await query.message.reply(
-                f'<b> ʜᴇʏ 👋 {query.from_user.mention} </b>😍\n\n<b>📫 ʏᴏᴜʀ ғɪʟᴇ ɪs ʀᴇᴀᴅʏ 📥</b>\n\n'           
-                f'<b>📂 Fɪʟᴇ Nᴀᴍᴇ</b> : <code>[CL] {title}</code>\n\n'              
-                f'<b>⚙️ Fɪʟᴇ Sɪᴢᴇ</b> : <b>{size}</b>',
-                True,
-                'html',
-                disable_web_page_preview=True,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton("📥  ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  📥", url = ms.link)
-                        ],
-                        [
-                            InlineKeyboardButton("⚠️ ᴄᴀɴɴᴏᴛ ᴀᴄᴄᴇss ❓ ᴄʟɪᴄᴋ ʜᴇʀᴇ ⚠️", url = f"{CH_LINK}")
-                        ]
-                    ]
-                )
-            )
-            await asyncio.sleep(600)
-            await msg1.delete()            
-            await ms.delete()
-            del msg1, ms
-        except Exception as e:
-            logger.exception(e, exc_info=True)
-
+                
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             await query.answer(f"☆ 𝐇𝐄𝐘 𝐈 𝐋𝐈𝐊𝐄 𝐘𝐎𝐔𝐑 𝐒𝐌𝐀𝐑𝐓𝐍𝐄𝐒 ! 𝐁𝐔𝐓 𝐃𝐎𝐍𝐓 𝐁𝐄 𝐎𝐕𝐄𝐑𝐒𝐌𝐀𝐑𝐓 😏",show_alert=True)
@@ -420,7 +395,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
         await query.answer()
         await client.send_cached_media(
-            chat_id=CH_FILTER,
+            chat_id=query.from_user.id,
             file_id=file_id,
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
