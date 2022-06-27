@@ -412,12 +412,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer()
     elif query.data == "start":
         buttons = [[
-        InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'http://t.me/CL_FILTER_BOT?startgroup=true')
+        InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url=f'https://t.me/Srinidhi_shetty_bot?startgroup=true')
         ], [
         InlineKeyboardButton('⚙️ ʜᴇʟᴘ', callback_data='help'),
         InlineKeyboardButton('😊 ᴀʙᴏᴜᴛ', callback_data='about_menu')
         ], [
-        InlineKeyboardButton("🔖 sᴜᴘᴘᴏʀᴛ", url='https://t.me/NL_BOTxCHAT')
+        InlineKeyboardButton("🔖 sᴜᴘᴘᴏʀᴛ 🕊️", url='https://t.me/NL_BOTxCHAT')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
