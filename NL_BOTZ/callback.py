@@ -1,4 +1,4 @@
-import asyncio
+[InlineKeyboardButton(text="Next Page ➡",callback_data=f"nextgroup_0_{keyword}")import asyncio
 import re
 import ast
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
@@ -603,6 +603,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='html'
         )
+    elif query.data == "reason":
+        await query.answer("⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯\nᴍᴏᴠɪᴇ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ ⪼ ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ ⪼ ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ ⪼ ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴘ\n\nᴇxᴀᴍᴘʟᴇ : ᴋɢꜰ ᴄʜᴀᴘᴛᴇʀ 2  2022\n\n✘ ᴅᴏɴᴛ ᴜꜱᴇ ➠ ':(!,./)\n\n© Tʜᴏᴍᴀs Sʜᴇʟʙʏ", show_alert=True)
+
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
         grpid = await active_connection(str(query.from_user.id))
